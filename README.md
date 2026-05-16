@@ -35,7 +35,7 @@ The related works are listed below in acknowledgment of their contributions.
   DOI: https://doi.org/10.1109/IJCNN52387.2021.9533533
 
 - **Representation Learning with Contrastive Predictive Coding**  
-  by Aaron van den Oord, Yazhe Li, Oriol Vinyals. CoRR abs/1807.03748 2018.  
+  by Aaron van den Oord, Yazhe Li, Oriol Vinyals. CoRR abs/1807.03748 (2018).  
   DOI: https://doi.org/10.48550/arXiv.1807.03748
 
 - **Hard Negative Mining for Metric Learning Based Zero-Shot Classification**  
