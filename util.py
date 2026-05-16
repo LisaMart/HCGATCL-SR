@@ -1,13 +1,13 @@
 import numpy as np
 from scipy.sparse import csr_matrix
 
-# -------------------- 1. Build binary item-session incidence matrix --------------------
+# -------------------- 1. Build transposed incidence matrix H^T --------------------
 def data_masks(all_sessions, n_node):
     """
-    Build binary incidence matrix for item-session relationships.
-    Each row = session, each column = item.
-    Entry = 1 if item appears in session, else 0.
-    Converts 1-based item IDs to 0-based internally.
+    Build the binary transposed incidence matrix H^T for the item-session hypergraph.
+    Rows correspond to sessions (hyperedges), columns correspond to items.
+    Entry H_T[j, i] = 1 if item v_i appears in session/hyperedge e_j, otherwise 0.
+    This corresponds to the hypergraph construction before Eq. (4.1) in Chapter 4.
     """
     indptr, indices, data = [0], [], []
     for session in all_sessions:
@@ -54,7 +54,8 @@ class Data:
         DH = H.multiply(1.0 / col_sum.reshape(-1,1))
         self.adjacency = (DH @ BH_T).tocoo()
 
-    # compute Jaccard similarity between sessions
+    # compute similarity between sessions
+    # Similarity score is corresponding to Eq. (4.1) in the dissertation
     def get_overlap(self, sessions):
         B = len(sessions)
         matrix = np.zeros((B, B), dtype=np.float32)
