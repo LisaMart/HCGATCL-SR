@@ -22,8 +22,11 @@ def trans_to_cpu(variable):
 # -------------------- 1. Hypergraph Convolution (item-level) --------------------
 class HyperConv(nn.Module):
     """
-    Propagates item embeddings over hypergraph adjacency with tanh activation.
-    Returns mean embedding across all layers.
+    Hypergraph convolution module for item-level representation learning.
+
+    This module corresponds to Eq. (4.2) and Eq. (4.3) in the dissertation:
+    - Eq. (4.2): hypergraph-based item embedding propagation;
+    - Eq. (4.3): averaging layer-wise item representations.
     """
     def __init__(self, layers, dataset, emb_size=100):
         super(HyperConv, self).__init__()
@@ -45,7 +48,12 @@ class HyperConv(nn.Module):
 # -------------------- 2. Single-head Graph Attention Layer --------------------
 class GraphAttentionLayer(nn.Module):
     """
-    Computes session-level attention for a single GAT layer.
+    Single-head graph attention layer for session-level representation learning.
+
+    This module corresponds to Eq. (4.9)–Eq. (4.11) in the dissertation:
+    - Eq. (4.9): attention score between sessions;
+    - Eq. (4.10): normalized attention weight;
+    - Eq. (4.11): session-level representation aggregation.
     """
     def __init__(self, in_features, out_features):
         super().__init__()
@@ -71,7 +79,10 @@ class GraphAttentionLayer(nn.Module):
 # -------------------- 3. Multi-layer GAT --------------------
 class GAT(nn.Module):
     """
-    Multi-layer session-level attention using stacked GraphAttentionLayer.
+    Multi-layer GAT module for learning session-level user preferences.
+
+    The initial session representation corresponds to Eq. (4.8), and the
+ 
     """
     def __init__(self, layers, batch_size, emb_size=100):
         super().__init__()
@@ -155,11 +166,21 @@ class HCGATCL_SR(nn.Module):
 
     # session encoder with positional attention
     def generate_sess_emb(self, item_embedding, session_item, session_len, reversed_sess_item, mask):
+    """
+    Generate the item-level session representation with position-aware soft attention.
+
+    This function corresponds to Eq. (4.4)–Eq. (4.7) in the dissertation:
+    - Eq. (4.4): position-aware item representation;
+    - Eq. (4.5): global session representation;
+    - Eq. (4.6): item attention weight;
+    - Eq. (4.7): item-level session representation.
+    """
         zeros = torch.zeros(1,self.emb_size)
         item_embedding = torch.cat([zeros,item_embedding],0)
         seq_h = torch.zeros(self.batch_size,reversed_sess_item.shape[1],self.emb_size)
         for i in torch.arange(session_item.shape[0]): seq_h[i]=item_embedding[reversed_sess_item[i].long()]
         hs = torch.div(torch.sum(seq_h,1),session_len)
+
         # positional attention
         mask = mask.float().unsqueeze(-1)
         length = seq_h.shape[1]
@@ -192,6 +213,11 @@ class HCGATCL_SR(nn.Module):
         Hard Negative Mining InfoNCE loss.
         Positive pair: z1[i] and z2[i].
         Hard negatives: top-K most similar z2[j], where j != i.
+        
+        This function corresponds to Eq. (4.13)–Eq. (4.15) in the dissertation:
+        - Eq. (4.13): cross-view similarity score;
+        - Eq. (4.14): top-K hard negative selection;
+        - Eq. (4.15): InfoNCE objective using selected hard negatives.
         """
         z1 = F.normalize(z1, dim=1)
         z2 = F.normalize(z2, dim=1)
@@ -241,6 +267,8 @@ class HCGATCL_SR(nn.Module):
     def fuse_session_representations(self,sess_emb_hgnn,sess_emb_gat):
         """
         Fuse item-level and session-level session representations.
+
+        This function corresponds to Eq. (4.12) in the dissertation.
 
         sess_emb_hgnn: item-level session representation from the HGCN branch
         sess_emb_gat : session-level session representation from the GAT branch
@@ -316,6 +344,9 @@ def forward(model, i, data):
     item_emb_hg, sess_emb_fused, con_loss = model(
         session_item, session_len, D_hat, A_hat, reversed_sess_item, mask)
 
+    # Compute relevance scores over all candidate items, corresponding to Eq. (4.16).
+    # Eq. (4.17), the softmax probability distribution, is handled implicitly
+    # by PyTorch CrossEntropyLoss during training.
     scores = torch.mm(model.W_out(sess_emb_fused), item_emb_hg.t())
     return tar, scores, con_loss
 
@@ -334,6 +365,9 @@ def train_test(model, train_data, test_data):
     for i in tqdm(slices, desc="Training"):
         model.zero_grad()
         targets, scores, con_loss = forward(model, i, train_data)
+        
+        # Cross-entropy recommendation loss corresponds to Eq. (4.18).
+        # Adding the weighted contrastive loss corresponds to Eq. (4.19).
         loss = model.loss_function(scores + 1e-8, targets) + con_loss
         loss.backward()
         model.optimizer.step()
