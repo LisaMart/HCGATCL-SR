@@ -20,31 +20,35 @@ The model design is inspired by several lines of prior research on hypergraph ne
 
 The related works are listed below in acknowledgment of their contributions.
 
-## Related Papers
+## Related Works
 
 - **Self-Supervised Hypergraph Convolutional Networks for Session-based Recommendation**  
-  Xin Xia, Hongzhi Yin, Junliang Yu, Qinyong Wang, Lizhen Cui, Xiangliang Zhang. AAAI 2021.  
+  by Xin Xia, Hongzhi Yin, Junliang Yu, Qinyong Wang, Lizhen Cui, Xiangliang Zhang. AAAI 2021.  
   DOI: https://doi.org/10.1609/aaai.v35i5.16578
 
 - **Hypergraph Neural Networks**  
-  Yifan Feng, Haoxuan You, Zizhao Zhang, Rongrong Ji, Yue Gao.  AAAI 2019: 3558-3565. 
+  by Yifan Feng, Haoxuan You, Zizhao Zhang, Rongrong Ji, Yue Gao.  AAAI 2019: 3558-3565.  
   DOI: https://doi.org/10.1609/aaai.v33i01.33013558
 
 - **Personalized Session-Based Recommendation Using Graph Attention Networks**  
-  Yongquan Xie, Zhengru Li, Tian Qin, Finn Tseng, Johannes Kristinsson, Shiqi Qiu, Yi Lu Murphey. IJCNN 2021.  
+  by Yongquan Xie, Zhengru Li, Tian Qin, Finn Tseng, Johannes Kristinsson, Shiqi Qiu, Yi Lu Murphey. IJCNN 2021.  
   DOI: https://doi.org/10.1109/IJCNN52387.2021.9533533
 
 - **Representation Learning with Contrastive Predictive Coding**  
-  Aaron van den Oord, Yazhe Li, Oriol Vinyals. arXiv:1807.03748, 2018.
+  by Aaron van den Oord, Yazhe Li, Oriol Vinyals. CoRR abs/1807.03748 2018.  
+  DOI: https://doi.org/10.48550/arXiv.1807.03748
 
 - **Hard Negative Mining for Metric Learning Based Zero-Shot Classification**  
-  Maxime Bucher, Stéphane Herbin, Frédéric Jurie. arXiv:1608.07441, 2016.  
-  DOI: https://doi.org/10.48550/arXiv.1608.07441
+  by Maxime Bucher, Stéphane Herbin, Frédéric Jurie. arXiv:1608.07441, 2016; also in ECCV Workshops (3) 2016: 524-531.  
+  DOI: https://doi.org/10.48550/arXiv.1608.07441  
+  DOI: https://doi.org/10.1007/978-3-319-49409-8_45  
 
 - **Hardness-Aware Deep Metric Learning**  
-  Wenzhao Zheng, Zhaodong Chen, Jiwen Lu, Jie Zhou. arXiv:1903.05503, 2019.  
-  DOI: https://doi.org/10.48550/arXiv.1903.05503
+  by Wenzhao Zheng, Zhaodong Chen, Jiwen Lu, Jie Zhou. arXiv:1903.05503, 2019; also in CVPR 2019: 72-81  
+  DOI: https://doi.org/10.48550/arXiv.1903.05503  
+  DOI: https://doi.org/10.1109/CVPR.2019.00016  
 
 - **ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning**  
-  Jun Xia, Lirong Wu, Ge Wang, Jintao Chen, Stan Z. Li. ICML 2022.  
-  DOI: https://doi.org/10.48550/arXiv.2110.02027
+  by Jun Xia, Lirong Wu, Ge Wang, Jintao Chen, Stan Z. Li. ICML 2022.  
+  DOI: https://proceedings.mlr.press/v162/xia22b.html  
+  DOI: https://doi.org/10.48550/arXiv.2110.02027  
