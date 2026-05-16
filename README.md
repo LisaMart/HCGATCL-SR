@@ -18,7 +18,7 @@ This repository contains the implementation of HCGATCL-SR, a session-based recom
 
 The model design is inspired by several lines of prior research on hypergraph neural networks, graph attention networks, and contrastive learning for session-based recommendation. The hypergraph convolution component is related to prior work on hypergraph neural networks and hypergraph-based session recommendation, including HGCN and DHCN. The session-level attention component refers to graph attention mechanisms for session-based recommendation. The contrastive learning objective follows the InfoNCE-style formulation introduced in Contrastive Predictive Coding, while the hard negative mining strategy is motivated by prior work on hard negative mining in metric learning and graph contrastive learning.
 
-The original papers are listed below for proper acknowledgment.
+The related works are listed below in acknowledgment of their contributions.
 
 ## Related Papers
 
